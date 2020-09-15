@@ -42,5 +42,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	gfx.DrawCircle(300.0f, 300.0f, 100.0f, Colors::Yellow);
+	gfx.DrawCircle(300.0, 300.0, 100.0, Colors::Yellow);
 }
