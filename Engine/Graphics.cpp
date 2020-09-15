@@ -316,28 +316,19 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
-void Graphics::DrawCircle(int xPos, int yPos, int r, Color c)
+void Graphics::DrawCircle(int x, int y, const int r, Color c)
 {
-	for (int innerRadius = r; innerRadius >= 0; --innerRadius)
+	const int r_sq = r * r;
+	for (int y_loop = y - r; y_loop < y + r; ++y_loop)
 	{
-		for (int x = xPos + innerRadius; x > xPos; --x)
+		for (int x_loop = x - r; x_loop < x + r; ++x_loop)
 		{
-			int y = yPos + sqrt(innerRadius * innerRadius - (x - xPos) * (x - xPos));
-			PutPixel(x, y, c);
-
-			y = yPos - sqrt(innerRadius * innerRadius - (x - xPos) * (x - xPos));
-
-			PutPixel(x, y, c);
-		}
-
-		for (int x = xPos - innerRadius; x < xPos; ++x)
-		{
-			int y = yPos + sqrt(innerRadius * innerRadius - (x - xPos) * (x - xPos));
-			PutPixel(x, y, c);
-
-			y = yPos - sqrt(innerRadius * innerRadius - (x - xPos) * (x - xPos));
-
-			PutPixel(x, y, c);
+			const int x_diff = x - x_loop;
+			const int y_diff = y - y_loop;
+			if (x_diff * x_diff + y_diff * y_diff <= r_sq)
+			{
+				PutPixel(x_loop, y_loop, c);
+			}
 		}
 	}
 }
